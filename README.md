@@ -6,10 +6,10 @@ Lumiere is a [Clojure](http://clojure.org) library that allows you to output sty
 
 Use [leiningen](https://github.com/technomancy/leiningen),
 
-``clojure
+```clojure
 (defproject your-project "1.0"
   :dependencies [[lumiere "1.0.0-SNAPSHOT"]])
-``
+```
 
 ## License
 
