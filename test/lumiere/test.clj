@@ -23,3 +23,4 @@
   (is (= "\033[1;46msome cyan text\033[0m" (bg-cyan "some cyan text")))
   (is (= "\033[1;47msome white text\033[0m" (bg-white "some white text")))
   (is (= "\033[1;49msome default text\033[0m" (bg-default "some default text"))))
+

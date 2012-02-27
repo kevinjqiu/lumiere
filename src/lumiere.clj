@@ -13,10 +13,16 @@
      (defn ~colour-func-name [text#] (format "%s%s%s" ~colour-name text# RESET))
      (defn ~bg-colour-func-name [text#] (format "%s%s%s" ~bg-colour-name text# RESET))))
 
+(defmacro defstyle [style-name style-func-name style-code]
+  `(do
+     (def ~style-name (format "\033[%dm" ~style-code))
+     (defn ~style-func-name [text#] (format "%s%s%s" ~style-name text# RESET))))
+
 (def RESET "\033[0m")
-(def BOLD "\033[1m")
-(def ITALIC "\033[3m")
-(def UNDERLINE "\033[4m")
+
+(defstyle BOLD bold 1)
+(defstyle ITALIC italic 3)
+(defstyle UNDERLINE underline 4)
 
 (defcolour BLACK BG-BLACK black bg-black 0)
 (defcolour RED BG-RED red bg-red 1)
