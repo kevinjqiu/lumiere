@@ -10,7 +10,8 @@
   (is (= "\033[1;34msome blue text\033[0m" (blue "some blue text")))
   (is (= "\033[1;35msome magenta text\033[0m" (magenta "some magenta text")))
   (is (= "\033[1;36msome cyan text\033[0m" (cyan "some cyan text")))
-  (is (= "\033[1;37msome white text\033[0m" (white "some white text"))))
+  (is (= "\033[1;37msome white text\033[0m" (white "some white text")))
+  (is (= "\033[1;39msome default text\033[0m" (default "some default text"))))
 
 (deftest test-only-background
   (is (= "\033[1;40msome black text\033[0m" (bg-black "some black text")))
@@ -20,4 +21,5 @@
   (is (= "\033[1;44msome blue text\033[0m" (bg-blue "some blue text")))
   (is (= "\033[1;45msome magenta text\033[0m" (bg-magenta "some magenta text")))
   (is (= "\033[1;46msome cyan text\033[0m" (bg-cyan "some cyan text")))
-  (is (= "\033[1;47msome white text\033[0m" (bg-white "some white text"))))
+  (is (= "\033[1;47msome white text\033[0m" (bg-white "some white text")))
+  (is (= "\033[1;49msome default text\033[0m" (bg-default "some default text"))))
