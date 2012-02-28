@@ -2,10 +2,11 @@
 
 (def RESET "\033[0m")
 
-(defrecord Luminere [text fg bg styles]
+(defrecord Lumiere [text fg bg styles]
   Object
   (toString [this]
-    (str (format "%s%s%s" (:styles this) (:text this) RESET))))
+    (let [prefix (str (:fg this) (:bg this) (:styles this))]
+      (str (format "%s%s%s" prefix (:text this) RESET)))))
 
 (defmacro defstyle [style-name
                     style-func-name
@@ -13,8 +14,8 @@
   `(do
      (def ~style-name (format "\033[%dm" ~style-code))
      (defn ~style-func-name [text#]
-       (cond (instance? String text#) (Luminere. text# nil nil ~style-name)
-             (instance? Luminere text#) (assoc text# :styles ~style-name)
+       (cond (instance? String text#) (Lumiere. text# nil nil ~style-name)
+             (instance? Lumiere text#) (assoc text# :styles ~style-name)
              :else (throw (java.lang.IllegalArgumentException.))))))
 
 (defstyle BOLD bold 1)
@@ -36,9 +37,13 @@
      (def ~colour-name (colour ~colour-code))
      (def ~bg-colour-name (colour ~colour-code true))
      (defn ~colour-func-name [text#]
-       (format "%s%s%s" ~colour-name text# RESET))
+       (cond (instance? String text#) (Lumiere. text# ~colour-name nil nil)
+             (instance? Lumiere text#) (assoc text# :fg ~colour-name)
+             :else (throw (java.lang.IllegalArgumentException.))))
      (defn ~bg-colour-func-name [text#]
-       (format "%s%s%s" ~bg-colour-name text# RESET))))
+       (cond (instance? String text#) (Lumiere. text# nil ~bg-colour-name nil)
+             (instance? Lumiere text#) (assoc text# :bg ~bg-colour-name)
+             :else (throw (java.lang.IllegalArgumentException.))))))
 
 (defcolour BLACK BG-BLACK black bg-black 0)
 (defcolour RED BG-RED red bg-red 1)
