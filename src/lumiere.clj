@@ -8,15 +8,20 @@
     (let [prefix (str (:fg this) (:bg this) (:styles this))]
       (str (format "%s%s%s" prefix (:text this) RESET)))))
 
+(defn adapt-lum [text option value]
+  (let [local-option-map (merge {:fg nil :bg nil :styles nil} {option value})]
+    (cond
+      (instance? String text) (Lumiere. text (:fg local-option-map) (:bg local-option-map) (:styles local-option-map))
+      (instance? Lumiere text) (assoc text option value)
+      :else (throw (java.lang.IllegalArgumentException.)))))
+
 (defmacro defstyle [style-name
                     style-func-name
                     ^Integer style-code]
   `(do
      (def ~style-name (format "\033[%dm" ~style-code))
      (defn ~style-func-name [text#]
-       (cond (instance? String text#) (Lumiere. text# nil nil ~style-name)
-             (instance? Lumiere text#) (assoc text# :styles ~style-name)
-             :else (throw (java.lang.IllegalArgumentException.))))))
+       (adapt-lum text# :styles ~style-name))))
 
 (defstyle BOLD bold 1)
 (defstyle ITALIC italic 3)
@@ -37,13 +42,9 @@
      (def ~colour-name (colour ~colour-code))
      (def ~bg-colour-name (colour ~colour-code true))
      (defn ~colour-func-name [text#]
-       (cond (instance? String text#) (Lumiere. text# ~colour-name nil nil)
-             (instance? Lumiere text#) (assoc text# :fg ~colour-name)
-             :else (throw (java.lang.IllegalArgumentException.))))
+       (adapt-lum text# :fg ~colour-name))
      (defn ~bg-colour-func-name [text#]
-       (cond (instance? String text#) (Lumiere. text# nil ~bg-colour-name nil)
-             (instance? Lumiere text#) (assoc text# :bg ~bg-colour-name)
-             :else (throw (java.lang.IllegalArgumentException.))))))
+       (adapt-lum text# :bg ~bg-colour-name))))
 
 (defcolour BLACK BG-BLACK black bg-black 0)
 (defcolour RED BG-RED red bg-red 1)
