@@ -1,8 +1,11 @@
 (ns lumiere)
 
+(def RESET "\033[0m")
+
 (defrecord Luminere [text fg bg styles]
   Object
-  (toString [this] "#TODO:"))
+  (toString [this]
+    (str (format "%s%s%s" (:styles this) (:text this) RESET))))
 
 (defmacro defstyle [style-name
                     style-func-name
@@ -11,10 +14,8 @@
      (def ~style-name (format "\033[%dm" ~style-code))
      (defn ~style-func-name [text#]
        (cond (instance? String text#) (Luminere. text# nil nil ~style-name)
-             (instance? Luminere text#) (assoc text# :styles ~style-name))
-             :else (throw (java.lang.IllegalArgumentException.)))))
-
-(def RESET "\033[0m")
+             (instance? Luminere text#) (assoc text# :styles ~style-name)
+             :else (throw (java.lang.IllegalArgumentException.))))))
 
 (defstyle BOLD bold 1)
 (defstyle ITALIC italic 3)
