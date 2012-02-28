@@ -1,9 +1,12 @@
 (ns lumiere)
 
-(defmacro defstyle [style-name style-func-name style-code]
+(defmacro defstyle [style-name
+                    style-func-name
+                    ^Integer style-code]
   `(do
      (def ~style-name (format "\033[%dm" ~style-code))
-     (defn ~style-func-name [text#] (format "%s%s%s" ~style-name text# RESET))))
+     (defn ~style-func-name [text#]
+       (format "%s%s%s" ~style-name text# RESET))))
 
 (def RESET "\033[0m")
 
@@ -12,17 +15,23 @@
 (defstyle UNDERLINE underline 4)
 
 (defn- colour 
-  ([code is-bg?]
+  ([^Integer code ^Boolean is-bg?]
    (format "\033[%dm" (+ (if is-bg? 40 30) code)))
-  ([code]
+  ([^Integer code]
    (colour code false)))
 
-(defmacro defcolour [colour-name bg-colour-name colour-func-name bg-colour-func-name colour-code]
+(defmacro defcolour [colour-name
+                     bg-colour-name
+                     colour-func-name
+                     bg-colour-func-name
+                     ^Integer colour-code]
   `(do
      (def ~colour-name (colour ~colour-code))
      (def ~bg-colour-name (colour ~colour-code true))
-     (defn ~colour-func-name [text#] (format "%s%s%s" ~colour-name text# RESET))
-     (defn ~bg-colour-func-name [text#] (format "%s%s%s" ~bg-colour-name text# RESET))))
+     (defn ~colour-func-name [text#]
+       (format "%s%s%s" ~colour-name text# RESET))
+     (defn ~bg-colour-func-name [text#]
+       (format "%s%s%s" ~bg-colour-name text# RESET))))
 
 (defcolour BLACK BG-BLACK black bg-black 0)
 (defcolour RED BG-RED red bg-red 1)
