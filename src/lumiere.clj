@@ -3,7 +3,7 @@
 
 (def RESET "\033[0m")
 
-(defn ansi-escape-seq [& codes]
+(defn- ansi-escape-seq [& codes]
   (format "\033[%sm" (join ";" (filter #(not= % nil) codes))))
 
 (defrecord Lumiere [text fg bg styles]
@@ -12,7 +12,7 @@
     (let [prefix (ansi-escape-seq (:fg this) (:bg this) (:styles this))]
       (format "%s%s%s" prefix (:text this) RESET))))
 
-(defn adapt-lum [text option value]
+(defn- adapt-lum [text option value]
   (let [local-option-map (merge {:fg nil :bg nil :styles nil} {option value})]
     (cond
       (instance? String text) (Lumiere. text (:fg local-option-map) (:bg local-option-map) (:styles local-option-map))

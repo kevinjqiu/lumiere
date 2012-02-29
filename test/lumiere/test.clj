@@ -28,3 +28,6 @@
   (is (= "\033[1msome bold text\033[0m" (str (bold "some bold text"))))
   (is (= "\033[3msome italic text\033[0m" (str (italic "some italic text"))))
   (is (= "\033[4msome underline text\033[0m" (str (underline "some underline text")))))
+
+(deftest test-fg-bg-with-style-roundtrip
+  (is (= (str (bold (red "red and bold"))) (str (red (bold "red and bold"))))))
