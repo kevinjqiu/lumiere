@@ -23,6 +23,7 @@ and start decorating your text:
 (print (str (bold (green "Have a nice day!"))))
 (-> "Stop right there" red bold underline str print)
 ```
+
 * Available colours (functions) are:
   * black, bg-black
   * red, bg-red
