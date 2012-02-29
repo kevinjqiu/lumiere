@@ -23,20 +23,20 @@ and start decorating your text:
 (print (str (bold (green "Have a nice day!"))))
 (-> "Stop right there" red bold underline str print)
 ```
-Available colours (functions) are:
-* black, bg-black
-* red, bg-red
-* green, bg-green
-* yellow, bg-yellow
-* blue, bg-blue
-* magenta, bg-magenta
-* cyan, bg-cyan
-* white, bg-white
+* Available colours (functions) are:
+  * black, bg-black
+  * red, bg-red
+  * green, bg-green
+  * yellow, bg-yellow
+  * blue, bg-blue
+  * magenta, bg-magenta
+  * cyan, bg-cyan
+  * white, bg-white
 
-Available styles (functions) are:
-* bold
-* italic (not supported on many terminals)
-* underline
+* Available styles (functions) are:
+  * bold
+  * italic (not supported on many terminals)
+  * underline
 
 ## License
 
