@@ -6,7 +6,7 @@
   Object
   (toString [this]
     (let [prefix (str (:fg this) (:bg this) (:styles this))]
-      (str (format "%s%s%s" prefix (:text this) RESET)))))
+      (format "%s%s%s" prefix (:text this) RESET))))
 
 (defn adapt-lum [text option value]
   (let [local-option-map (merge {:fg nil :bg nil :styles nil} {option value})]
