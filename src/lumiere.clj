@@ -1,11 +1,15 @@
-(ns lumiere)
+(ns lumiere
+  (:use [clojure.string :only [join]]))
 
 (def RESET "\033[0m")
+
+(defn ansi-escape-seq [& codes]
+  (format "\033[%sm" (join ";" (filter #(not= % nil) codes))))
 
 (defrecord Lumiere [text fg bg styles]
   Object
   (toString [this]
-    (let [prefix (str (:fg this) (:bg this) (:styles this))]
+    (let [prefix (ansi-escape-seq (:fg this) (:bg this) (:styles this))]
       (format "%s%s%s" prefix (:text this) RESET))))
 
 (defn adapt-lum [text option value]
@@ -19,7 +23,7 @@
                     style-func-name
                     ^Integer style-code]
   `(do
-     (def ~style-name (format "\033[%dm" ~style-code))
+     (def ~style-name ~style-code)
      (defn ~style-func-name [text#]
        (adapt-lum text# :styles ~style-name))))
 
@@ -29,7 +33,7 @@
 
 (defn- colour 
   ([^Integer code ^Boolean is-bg?]
-   (format "\033[%dm" (+ (if is-bg? 40 30) code)))
+   (+ (if is-bg? 40 30) code))
   ([^Integer code]
    (colour code false)))
 
