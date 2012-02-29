@@ -12,12 +12,14 @@ Use [leiningen](https://github.com/technomancy/leiningen),
 ```
 
 Lumiere has a very simple API. To use it, simple `use` or `require` it in your namespace:
+
 ```clojure
 (ns your-namespace
   (:use [lumiere]))
 ```
 
 and start decorating your text:
+
 ```clojure
 (print (str (red "Are you sure you want to quit? [Y/n]")))
 (print (str (green "Continue")))
