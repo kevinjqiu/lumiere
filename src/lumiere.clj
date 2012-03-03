@@ -19,17 +19,13 @@
       (instance? Lumiere text) (assoc text option value)
       :else (throw (java.lang.IllegalArgumentException.)))))
 
-(defmacro defstyle [style-name
-                    style-func-name
-                    ^Integer style-code]
-  `(do
-     (def ~style-name ~style-code)
-     (defn ~style-func-name [text#]
-       (adapt-lum text# :styles ~style-name))))
+(defmacro defstyle [style-func-name ^Integer style-code]
+  `(defn ~style-func-name [text#]
+       (adapt-lum text# :styles ~style-code)))
 
-(defstyle BOLD bold 1)
-(defstyle ITALIC italic 3)
-(defstyle UNDERLINE underline 4)
+(defstyle bold 1)
+(defstyle italic 3)
+(defstyle underline 4)
 
 (defn- colour 
   ([^Integer code ^Boolean is-bg?]
@@ -37,25 +33,19 @@
   ([^Integer code]
    (colour code false)))
 
-(defmacro defcolour [colour-name
-                     bg-colour-name
-                     colour-func-name
-                     bg-colour-func-name
-                     ^Integer colour-code]
+(defmacro defcolour [colour-func-name bg-colour-func-name ^Integer colour-code]
   `(do
-     (def ~colour-name (colour ~colour-code))
-     (def ~bg-colour-name (colour ~colour-code true))
      (defn ~colour-func-name [text#]
-       (adapt-lum text# :fg ~colour-name))
+       (adapt-lum text# :fg (colour ~colour-code)))
      (defn ~bg-colour-func-name [text#]
-       (adapt-lum text# :bg ~bg-colour-name))))
+       (adapt-lum text# :bg (colour ~colour-code true)))))
 
-(defcolour BLACK BG-BLACK black bg-black 0)
-(defcolour RED BG-RED red bg-red 1)
-(defcolour GREEN BG-GREEN green bg-green 2)
-(defcolour YELLOW BG-YELLOW yellow bg-yellow 3)
-(defcolour BLUE BG-BLUE blue bg-blue 4)
-(defcolour MAGENTA BG-MAGENTA magenta bg-magenta 5)
-(defcolour CYAN BG-CYAN cyan bg-cyan 6)
-(defcolour WHITE BG-WHITE white bg-white 7)
-(defcolour DEFAULT BG-DEFAULT default bg-default 9)
+(defcolour black bg-black 0)
+(defcolour red bg-red 1)
+(defcolour green bg-green 2)
+(defcolour yellow bg-yellow 3)
+(defcolour blue bg-blue 4)
+(defcolour magenta bg-magenta 5)
+(defcolour cyan bg-cyan 6)
+(defcolour white bg-white 7)
+(defcolour default bg-default 9)
