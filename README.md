@@ -28,19 +28,19 @@ and start decorating your text:
 ```
 
 * Available colours (functions) are:
-  * black, bg-black
-  * red, bg-red
-  * green, bg-green
-  * yellow, bg-yellow
-  * blue, bg-blue
-  * magenta, bg-magenta
-  * cyan, bg-cyan
-  * white, bg-white
+  * `black`, `bg-black`
+  * `red`, `bg-red`
+  * `green`, `bg-green`
+  * `yellow`, `bg-yellow`
+  * `blue`, `bg-blue`
+  * `magenta`, `bg-magenta`
+  * `cyan`, `bg-cyan`
+  * `white`, `bg-white`
 
 * Available styles (functions) are:
-  * bold
-  * italic (not supported on many terminals)
-  * underline
+  * `bold`
+  * `italic` (not supported on many terminals)
+  * `underline`
 
 ## License
 
