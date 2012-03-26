@@ -1,5 +1,5 @@
 (ns lumiere.test
-  (:use [lumiere])
+  (:use [lumiere.lumiere])
   (:use [clojure.test]))
 
 (deftest test-only-foreground

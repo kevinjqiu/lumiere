@@ -15,7 +15,7 @@ Lumiere has a very simple API. To use it, simple `use` or `require` it in your n
 
 ```clojure
 (ns your-namespace
-  (:use [lumiere]))
+  (:use [lumiere.lumiere]))
 ```
 
 and start decorating your text:

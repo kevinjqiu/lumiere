@@ -1,4 +1,4 @@
-(ns lumiere
+(ns lumiere.lumiere
   (:use [clojure.string :only [join]]))
 
 (def RESET "\033[0m")
